@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BirdTag - Smart Media Storage</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">
+                    <span class="logo-icon">🦅</span>
+                    <span class="logo-text">BirdTag</span>
+                </div>
+                <p class="tagline">Smart Bird Detection & Media Storage</p>
+            </div>
+            <div class="user-section">
+                <span class="user-welcome">Welcome back!</span>
+                <button class="sign-out-btn" id="signOutBtn">
+                    <span>Sign Out</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <button class="nav-item active" data-section="upload">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span>Upload</span>
+                <div class="nav-indicator"></div>
+            </button>
+            <button class="nav-item" data-section="search">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <span>Search</span>
+                <div class="nav-indicator"></div>
+            </button>
+            <button class="nav-item" data-section="gallery">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <path d="M9 9a3 3 0 106 0 3 3 0 00-6 0zM17 19l-5-5-3 3-2-2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span>Gallery</span>
+                <div class="nav-indicator"></div>
+            </button>
+            <button class="nav-item" data-section="notifications">
+                <div class="nav-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2h16l-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <span>Alerts</span>
+                <div class="nav-indicator"></div>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        <!-- Upload Section -->
+        <section id="uploadSection" class="content-section active">
+            <div class="section-header">
+                <h2>Upload Media Files</h2>
+                <p>Drag and drop your files or click to browse</p>
+            </div>
+
+            <div class="upload-wrapper">
+                <div class="upload-area" id="dropZone">
+                    <div class="upload-decoration">
+                        <div class="upload-icon-wrapper">
+                            <svg class="upload-icon" width="64" height="64" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2L12 14M12 14L8 10M12 14L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M2 17L2 19C2 20.1046 2.89543 21 4 21L20 21C21.1046 21 22 20.1046 22 19L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Drop your files here</h3>
+                        <p>or <button class="browse-btn">browse files</button> from your computer</p>
+                        <div class="file-types">
+                            <span class="file-type">Images</span>
+                            <span class="file-type">Videos</span>
+                            <span class="file-type">Audio</span>
+                        </div>
+                    </div>
+                    <input type="file" id="fileInput" multiple accept="image/*,video/*,audio/*" hidden>
+                </div>
+
+                <div class="file-preview-container">
+                    <h3 class="preview-title" style="display: none;">Selected Files</h3>
+                    <div id="filePreview" class="file-preview-grid"></div>
+                </div>
+
+                <div class="upload-actions" style="display: none;">
+                    <button id="uploadBtn" class="action-btn primary-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path d="M7 10l5-5m0 0l5 5m-5-5v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Start Upload
+                    </button>
+                    <button class="action-btn secondary-btn" onclick="clearFiles()">
+                        Clear All
+                    </button>
+                </div>
+
+                <div id="uploadProgress" class="upload-progress" style="display: none;">
+                    <div class="progress-header">
+                        <span class="progress-title">Uploading files...</span>
+                        <span class="progress-text">0%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="searchSection" class="content-section">
+            <div class="section-header">
+                <h2>Search Your Collection</h2>
+                <p>Find files by bird species, upload similar media, or search by thumbnail</p>
+            </div>
+
+            <div class="search-container">
+                <!-- Search by Tags -->
+                <div class="search-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M7 7h10M7 12h10M7 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3>Search by Tags</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="tag-input-group">
+                            <input type="text" id="tagInput" placeholder="Bird species (e.g., crow)" class="tag-input">
+                            <input type="number" id="countInput" placeholder="Count" min="1" value="1" class="count-input">
+                            <button id="addTagBtn" class="add-tag-btn">Add</button>
+                        </div>
+                        <div id="selectedTags" class="selected-tags"></div>
+                        <button id="searchByTagsBtn" class="search-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                                <path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Search
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search by File -->
+                <div class="search-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" stroke-width="2"/>
+                                <path d="M14 2v6h6M10 12a2 2 0 104 0 2 2 0 00-4 0z" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <h3>Search by File</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="file-drop-zone">
+                            <input type="file" id="queryFileInput" accept="image/*,video/*,audio/*" hidden>
+                            <div class="drop-content" onclick="document.getElementById('queryFileInput').click()">
+                                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 4v16m8-8H4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                <p>Click to select file</p>
+                            </div>
+                        </div>
+                        <button id="searchByFileBtn" class="search-btn">Find Similar</button>
+                    </div>
+                </div>
+
+                <!-- Search by URL -->
+                <div class="search-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3>Search by URL</h3>
+                    </div>
+                    <div class="card-body">
+                        <input type="url" id="thumbnailUrlInput" placeholder="Enter thumbnail S3 URL" class="url-input">
+                        <button id="searchByUrlBtn" class="search-btn">Get Full Image</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div class="results-container" style="display: none;">
+                <h3 class="results-title">Search Results</h3>
+                <div id="searchResults" class="results-grid"></div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallerySection" class="content-section">
+            <div class="section-header">
+                <h2>Media Gallery</h2>
+                <p>Browse all your uploaded bird media</p>
+            </div>
+            
+            <div class="gallery-stats">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(142, 40, 0, 0.1); color: var(--dark-red);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Total Files</h4>
+                        <p class="stat-number">247</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(255, 176, 59, 0.1); color: var(--yellow);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M20 7h-9l-1-1H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Bird Species</h4>
+                        <p class="stat-number">23</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(70, 137, 102, 0.1); color: var(--green);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="stat-content">
+                        <h4>Tagged Today</h4>
+                        <p class="stat-number">17</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Mock gallery items -->
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300x200/468966/ffffff?text=Eagle" alt="Eagle">
+                    <div class="gallery-overlay">
+                        <h4>American Eagle</h4>
+                        <p>Uploaded 2 hours ago</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300x200/FFB03B/333333?text=Crow" alt="Crow">
+                    <div class="gallery-overlay">
+                        <h4>Common Crow</h4>
+                        <p>Uploaded yesterday</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://via.placeholder.com/300x200/B64926/ffffff?text=Robin" alt="Robin">
+                    <div class="gallery-overlay">
+                        <h4>European Robin</h4>
+                        <p>Uploaded 3 days ago</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Notifications Section -->
+        <section id="notificationsSection" class="content-section">
+            <div class="section-header">
+                <h2>Notification Preferences</h2>
+                <p>Subscribe to get alerts when new bird species are uploaded</p>
+            </div>
+
+            <div class="notifications-wrapper">
+                <div class="current-subs-card">
+                    <h3>Your Active Subscriptions</h3>
+                    <div id="currentTags" class="current-tags">
+                        <span class="sub-tag">Crow</span>
+                        <span class="sub-tag">Eagle</span>
+                        <span class="sub-tag">Sparrow</span>
+                    </div>
+                </div>
+
+                <div class="available-tags-card">
+                    <h3>Available Bird Species</h3>
+                    <div class="bird-grid">
+                        <label class="bird-option">
+                            <input type="checkbox" value="crow" checked>
+                            <div class="bird-card">
+                                <span class="bird-emoji">🦅</span>
+                                <span class="bird-name">Crow</span>
+                            </div>
+                        </label>
+                        <label class="bird-option">
+                            <input type="checkbox" value="pigeon">
+                            <div class="bird-card">
+                                <span class="bird-emoji">🕊️</span>
+                                <span class="bird-name">Pigeon</span>
+                            </div>
+                        </label>
+                        <label class="bird-option">
+                            <input type="checkbox" value="sparrow" checked>
+                            <div class="bird-card">
+                                <span class="bird-emoji">🐦</span>
+                                <span class="bird-name">Sparrow</span>
+                            </div>
+                        </label>
+                        <label class="bird-option">
+                            <input type="checkbox" value="eagle" checked>
+                            <div class="bird-card">
+                                <span class="bird-emoji">🦅</span>
+                                <span class="bird-name">Eagle</span>
+                            </div>
+                        </label>
+                        <label class="bird-option">
+                            <input type="checkbox" value="owl">
+                            <div class="bird-card">
+                                <span class="bird-emoji">🦉</span>
+                                <span class="bird-name">Owl</span>
+                            </div>
+                        </label>
+                        <label class="bird-option">
+                            <input type="checkbox" value="parrot">
+                            <div class="bird-card">
+                                <span class="bird-emoji">🦜</span>
+                                <span class="bird-name">Parrot</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="notification-actions">
+                    <button class="notif-btn save-btn">Save Preferences</button>
+                    <button class="notif-btn clear-btn">Clear All</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
